@@ -28,6 +28,7 @@ async function handleLogin(req,res){
     setUser(sessionId,user);
     res.cookie('uid',sessionId);
     return res.redirect("/");
+    
 }
 module.exports={
     handleUserSignUp,
