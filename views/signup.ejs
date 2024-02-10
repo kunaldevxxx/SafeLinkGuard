@@ -24,7 +24,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background-color: #9C62E5; /* Set your desired background color */
+            background: linear-gradient(to right, #3D2B70, #160621); /* Set your desired background color */
         }
 
         .container {
@@ -37,6 +37,12 @@
             border-radius: 8px;
             max-width: 400px;
             width: 100%;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37); /* Add box shadow for touch effect */
+            transition: transform 0.3s ease-in-out; /* Add transition for touch effect */
+        }
+
+        .form-container:hover {
+            transform: scale(1.05); /* Increase size on hover for touch effect */
         }
 
         label {
@@ -53,12 +59,13 @@
             width: 100%;
             outline: none;
         }
+
         .password-container {
             position: relative;
         }
 
         #password {
-            padding-right: 40px; 
+            padding-right: 40px;
         }
 
         .toggle-password {
@@ -68,6 +75,7 @@
             transform: translateY(-50%);
             cursor: pointer;
         }
+
         button {
             padding: 10px 20px;
             background-color: #9C62E5;
@@ -81,6 +89,39 @@
         button:hover {
             background-color: #6A3988;
         }
+
+        .loading-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+        }
+
+        .emoji {
+            font-size: 60px;
+            animation: bounceIn 2s ease-in-out forwards;
+        }
+
+        @keyframes bounceIn {
+            0% {
+                transform: translateY(-100px);
+                opacity: 0;
+            }
+            70% {
+                transform: translateY(20px);
+            }
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
     </style>
 </head>
 
@@ -88,7 +129,7 @@
     <div class="container">
         <div class="form-container">
             <h2>Signup</h2>
-            <form method="POST" action="/user">
+            <form id="signupForm" method="POST" action="/user" onsubmit="return registerUser()">
                 <label for="name">Full Name</label>
                 <input type="text" id="name" name="name" placeholder="John Doe" required>
 
@@ -107,18 +148,32 @@
             </form>
         </div>
     </div>
+    <div class="loading-container" id="loadingContainer" style="display: none;">
+        <div class="emoji">😊</div>
+    </div>
     <script>
-            function togglePasswordVisibility() {
+        function togglePasswordVisibility() {
             var passwordInput = document.getElementById('password');
             var icon = document.querySelector('.toggle-password');
 
             if (passwordInput.type === 'password') {
                 passwordInput.type = 'text';
-                icon.innerHTML = '&#128064;'; 
+                icon.innerHTML = '&#128064;';
             } else {
                 passwordInput.type = 'password';
-                icon.innerHTML = '&#128065;'; 
+                icon.innerHTML = '&#128065;';
             }
+        }
+
+        function registerUser() {
+            // Simulating registration process with setTimeout
+            document.getElementById('loadingContainer').style.display = 'flex';
+            setTimeout(function () {
+                document.getElementById('loadingContainer').style.display = 'none';
+                // Redirect to login page after registration
+                window.location.href = "/login";
+            }, 2000); // Change the duration as needed
+            return false; // Prevent form submission
         }
     </script>
 </body>
