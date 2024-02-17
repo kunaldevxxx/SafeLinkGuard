@@ -6,6 +6,7 @@ function setUser(user) {
         return jwt.sign({
             _id:user._id,
             email:user.email,
+            role:user.role,
         }, secret, { expiresIn: '1d' }); 
     } catch (error) {
         console.error('Error signing JWT:', error);
